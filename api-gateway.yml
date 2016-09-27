@@ -1,0 +1,64 @@
+server:
+  port: 8765
+spring:
+  profiles:
+    active: docker-development-cloud
+---
+spring:
+  profiles: docker-development-cloud
+  application:
+    name: api-gateway
+zuul:
+  routes:
+    po-service: /api/po/**
+    item-service: /api/item/**
+    supplier-service: /api/supplier/**
+    web-portal: /**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${HOST_IP}:8761/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    hostname: api-gateway
+    prefer-ip-address: true
+---
+spring:
+  profiles: docker-production-cloud
+  application:
+    name: api-gateway
+ 
+zuul:
+  routes:
+    po-service: /api/po/**
+    item-service: /api/item/**
+    supplier-service: /api/supplier/**
+    web-portal: /**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${HOST_IP}:8761/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    hostname: api-gateway
+    prefer-ip-address: true
+---
+spring:
+  profiles: azure-development-cloud
+  application:
+    name: api-gateway
+ 
+zuul:
+  routes:
+    po-service: /api/po/**
+    item-service: /api/item/**
+    supplier-service: /api/supplier/**
+    web-portal: /**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${HOST_IP}:8761/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    hostname: api-gateway
+    prefer-ip-address: true

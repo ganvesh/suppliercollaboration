@@ -1,0 +1,90 @@
+server:
+  port: 8761
+
+spring:
+  profiles:
+    active: docker-development-cloud
+---
+spring:
+  profiles: docker-development-cloud
+  application:
+    name: eureka-server
+  cloud:
+    config:
+        discovery:
+            service-id: config-server
+        uri: http://${HOST_IP}:8888
+        
+eureka:
+  client:
+    register-with-eureka: false
+    eureka-service-url-poll-interval-seconds: 5000
+    enabled: true
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${HOST_IP}:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: eureka-server
+  #  non-secure-port: 80
+logging:
+  level:
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+  file: logs/eureka-server.log
+
+---
+spring:
+  profiles: docker-production-cloud
+  application:
+    name: eureka-server
+  cloud:
+    config:
+        discovery:
+            service-id: config-server
+        uri: http://${HOST_IP}:8888
+        
+eureka:
+  client:
+    register-with-eureka: false
+    eureka-service-url-poll-interval-seconds: 5000
+    enabled: true
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${HOST_IP}:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: eureka-server
+logging:
+  level:
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+  file: logs/eureka-server.log
+
+---
+spring:
+  profiles: azure-development-cloud
+  application:
+    name: eureka-server
+  cloud:
+    config:
+        discovery:
+            service-id: config-server
+        uri: http://localhost:8888
+        
+eureka:
+  client:
+    register-with-eureka: false
+    eureka-service-url-poll-interval-seconds: 5000
+    enabled: true
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: eureka-server
+logging:
+  level:
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+  file: logs/eureka-server.log
